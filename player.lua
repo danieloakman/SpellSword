@@ -108,20 +108,25 @@ function Player:keypressed(key)
     )
   end
   if key == 'space' then
---    __.filter({1,2,3,4}, function(v) return v % 2 == 0 end)
+--    u.filter({1,2,3,4}, function(v) return v % 2 == 0 end)
 
---    __(__.keys(self)):chain()
---      :each(print)
+--    u(u.keys(self)):chain()
+--      :each(function(v)
+--        print(v .. ' ' .. tostring(self[v]))
+--      end)
 
---    __(__.keys(self)):chain()
+--    u(u.keys(self)):chain()
 --      :each(lmd(v) -> )
 
---    add = lmd('(a, b) -> a + b')
---    print(add(1, 2))
-
---    _(_.keys(self)):chain()
+--    u(u.keys(self)):chain()
 --      :filter(function(key) return string.match(key, 'Weapon',) end)
 --      :each(print)
+
+    local sound = sfxr.newSound()
+    sound:randomJump()
+    local soundData = sound:generateSoundData()
+    local source = love.audio.newSource(soundData)
+    source:play()
   end
 end
 

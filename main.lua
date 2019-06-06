@@ -4,6 +4,8 @@ function love.load()
     require('mobdebug').start()
   end
   io.stdout:setvbuf('no') -- NOTE: TURN THIS OFF WHEN RUNNING IN PROD
+  local majorV, minorV, revision, codename = love.getVersion()
+  print('LOVE2D version: ' .. majorV .. '.' .. minorV .. 'r' .. revision .. ' ' .. codename)
   
   -- Disable anti-aliasing, kind of:
   love.graphics.setDefaultFilter('nearest', 'nearest', 1)
@@ -14,8 +16,8 @@ function love.load()
   Object = require 'lib/classic'
   Camera = require 'lib/camera'
   inspect = require 'lib/inspect'
-  _ = require 'lib/underscore'
-  lmd = require("lib/lambda")
+  u = require 'lib/underscore'
+  sfxr = require 'lib/sfxr'
 
   require 'player'
   require 'map'
@@ -60,6 +62,7 @@ function love.keypressed(key)
   player:keypressed(key)
   if key == '=' and camera.scale < 10 then camera.scale = camera.scale + 1 end
   if key == '-' and camera.scale > 1 then camera.scale = camera.scale - 1 end
+  if key == 'escape' then love.event.quit(0) end
 end
 
 function love.keyreleased(key)
