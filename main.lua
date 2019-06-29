@@ -13,17 +13,16 @@ function love.load()
   windowWidth, windowHeight = love.graphics.getDimensions()
   
   -- Globally required libraries:
-  
-  
-  -- Require libraries:
-  local Camera = require 'lib/camera'
   inspect = require 'lib/inspect'
   _ = require 'lib/underscore'
   sfxr = require 'lib/sfxr'
+  require 'utils'
+  
+  -- Require libraries:
+  local Camera = require 'lib/camera'
   local Player = require 'player'
   local Map = require 'map'
   local Physics = require 'physics'
-  require 'utils'
   local MeleeWeapon = require 'meleeWeapon'
   
   -- Shadows:
@@ -36,7 +35,6 @@ function love.load()
   
   -- Create a light world
   newLightWorld = LightWorld:new()
---  newLightWorld:Resize()
   lightArr = {}
   bodyArr = {}
 
