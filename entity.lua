@@ -26,7 +26,7 @@ function Entity:new(startCoords, x, y, width, height, speed, offsetX, offsetY)
     table.insert(
       frames, love.graphics.newQuad(
         (i * frameWidth) + startCoords.x, startCoords.y,
-        frameWidth, frameHeight, image.width, image.height
+        frameWidth, frameHeight, spriteSheet.width, spriteSheet.height
       )
     )
   end
@@ -41,7 +41,7 @@ function Entity:update(dt)
 end
 
 function Entity:draw()
-  love.graphics.draw(image.src, frames[math.floor(self.currentFrame)], self.x, self.y, 0, self.scaleX, self.scaleY, self.offsetX, self.offsetY, 0, 0)
+  love.graphics.draw(spriteSheet.src, frames[math.floor(self.currentFrame)], self.x, self.y, 0, self.scaleX, self.scaleY, self.offsetX, self.offsetY, 0, 0)
 end
 
 return Entity

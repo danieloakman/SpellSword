@@ -30,6 +30,7 @@ local config = {
 	physics_show = false,
 	enable_temporal = true, -- Enable '[' and ']' keys to slow and speed up game
 
+  -- Below in cupid_commands.env is where console commands are set, add more there
 }
 
 -----------------------------------------------------
@@ -166,7 +167,7 @@ local cupid_commands
 cupid_commands = {
 	env = {
 		config = config,
-		mode = function(...) g.setMode(...) end,
+		mode = function(...) g.setMode(...) end, -- g.setMode is nil ATM
 		quit = function(...) love.event.quit() end,
 		dir = function(what, deep)
 			if deep == nil then deep = true end
@@ -177,9 +178,9 @@ cupid_commands = {
 				local mt = getmetatable(what)
 				if mt and deep then what = mt["__index"] else what = nil end
 			end
-
 			return "[" .. table.concat(lst, ", ") .. "]"
 		end,
+    clear = function(...) print('\n\n\n\n\n\n\n\n\n\n') end
 	},
 	["command"] = function(self, cmd)
 		local xcmd = cmd

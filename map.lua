@@ -19,7 +19,7 @@ function Map:new(mapName)
     for j = 0, 31 do
       table.insert(
         tiles, love.graphics.newQuad(
-          j * frameWidth, i * frameHeight, frameWidth, frameHeight, image.width, image.height
+          j * frameWidth, i * frameHeight, frameWidth, frameHeight, spriteSheet.width, spriteSheet.height
         )
       )
     end
@@ -58,7 +58,7 @@ function Map:draw(layer)
       local x = (self.tilewidth * i)
       local y = (self.tileheight * j)
       love.graphics.draw(
-        image.src, tiles[v], x, y, 0, 1, 1, 0, 0, 0, 0
+        spriteSheet.src, tiles[v], x, y, 0, 1, 1, 0, 0, 0, 0
       )
     end
   end
@@ -97,7 +97,7 @@ function Map:drawTiles()
     local index = i
     while index > 32 do index = index - 32 end
     love.graphics.draw(
-      image.src, tiles[i], self.tilewidth * index, self.tileheight * j, 0, 1, 1, 0, 0, 0, 0
+      spriteSheet.src, tiles[i], self.tilewidth * index, self.tileheight * j, 0, 1, 1, 0, 0, 0, 0
     )
   end
 end

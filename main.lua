@@ -35,9 +35,9 @@ function love.load()
   PolygonShadow = require "shadows.ShadowShapes.PolygonShadow"
   CircleShadow = require "shadows.ShadowShapes.CircleShadow"
   
-  image = {src = love.graphics.newImage('graphics/0x72_DungeonTilesetII_v1.2.png')}
-  image.width = image.src:getWidth()
-  image.height = image.src:getHeight()
+  spriteSheet = {src = love.graphics.newImage('graphics/0x72_DungeonTilesetII_v1.2.png')}
+  spriteSheet.width = spriteSheet.src:getWidth()
+  spriteSheet.height = spriteSheet.src:getHeight()
   map = Map('testMap')
   player = Player('mR', map.spawn.x, map.spawn.y)
   pEng = Physics(player, map) -- Physics Engine
@@ -109,6 +109,10 @@ function love.draw()
   map:draw('frontWalls')
   if _g.drawMapGrid then map:drawTestGrid() end
   if _g.drawCollisionBoxes then pEng:draw() end
+  if _g.drawFps then
+    local x,y = camera:worldCoords(1, 1)
+    love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), x, y, 0, 0.5, 0.5)
+  end
 	newLightWorld:Draw() -- Draw the light world with white color
   camera:detach() -- do all drawing before this
 end

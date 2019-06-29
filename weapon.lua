@@ -13,7 +13,7 @@ function Weapon:new(weapon, owner)
   self.frameHeight = weapon.sprite.frameHeight
   quad = love.graphics.newQuad(
     weapon.sprite.x, weapon.sprite.y,
-    self.frameWidth, self.frameHeight, image.width, image.height
+    self.frameWidth, self.frameHeight, spriteSheet.width, spriteSheet.height
   )
 end
 
@@ -24,7 +24,7 @@ end
 
 function Weapon:draw()
   love.graphics.draw(
-    image.src, quad, self.x, self.y, self.rotation, self.scaleX, self.scaleY, self.offsetX, self.offsetY, 0, 0
+    spriteSheet.src, quad, self.x, self.y, self.rotation, self.scaleX, self.scaleY, self.offsetX, self.offsetY, 0, 0
   )
 end
 
