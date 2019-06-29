@@ -6,3 +6,7 @@ end
 function toRadians(degrees)
   return (degrees * math.pi) / 180
 end
+
+function pinspect(table)
+  print(inspect(table))
+end

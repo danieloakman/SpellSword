@@ -1,9 +1,11 @@
 -- Global variables:
-global = {
-  dev = true -- If false then is in prod
+_g = {
+  dev = true, -- If false then is in prod
+  drawMapGrid = false,
+  drawCollisionBoxes = false
 }
 
-if global.dev then require 'lib/cupid' end
+if _g.dev then require 'lib/cupid' end -- Look in lib/cupid.lua for its config
 
 function love.conf(t)
   t.identity = nil                    -- The name of the save directory (string)

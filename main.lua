@@ -5,7 +5,7 @@ function love.load()
   end
   
   -- Prints console out to output of editor
---  io.stdout:setvbuf('no') -- NOTE: TURN THIS OFF WHEN RUNNING IN PROD
+  if _g.dev then io.stdout:setvbuf('no') end -- Only run in dev because of performance hit when on
 
   local majorV, minorV, revision, codename = love.getVersion()
   print('LOVE2D version: ' .. majorV .. '.' .. minorV .. 'r' .. revision .. ' ' .. codename)
@@ -17,7 +17,7 @@ function love.load()
   
   -- Globally required libraries:
   inspect = require 'lib/inspect'
-  _ = require 'lib/underscore'
+  _u = require 'lib/underscore'
   sfxr = require 'lib/sfxr'
   require 'utils'
   
@@ -34,6 +34,14 @@ function love.load()
   Body = require "shadows.Body"
   PolygonShadow = require "shadows.ShadowShapes.PolygonShadow"
   CircleShadow = require "shadows.ShadowShapes.CircleShadow"
+  
+  image = {src = love.graphics.newImage('graphics/0x72_DungeonTilesetII_v1.2.png')}
+  image.width = image.src:getWidth()
+  image.height = image.src:getHeight()
+  map = Map('testMap')
+  player = Player('mR', map.spawn.x, map.spawn.y)
+  pEng = Physics(player, map) -- Physics Engine
+  camera = Camera(player.x, player.y, 3)
   
   -- Create a light world
   newLightWorld = LightWorld:new()
@@ -70,14 +78,6 @@ function love.load()
 
   -- Add a polygon shape to the second body
   PolygonShadow:new(bodyArr[2], -20, -20, 20, -20, 20, 20, -20, 20)
-  
-  image = {src = love.graphics.newImage('graphics/0x72_DungeonTilesetII_v1.2.png')}
-  image.width = image.src:getWidth()
-  image.height = image.src:getHeight()
-  map = Map('testMap')
-  player = Player('mR', map.spawn.x, map.spawn.y)
-  pEng = Physics(player, map) -- Physics Engine
-  camera = Camera(player.x, player.y, 3)
 end
 
 function love.update(dt)
@@ -107,8 +107,8 @@ function love.draw()
   map:draw('backWalls')
   player:draw()
   map:draw('frontWalls')
---  map:drawTestGrid()
---  pEng:draw()
+  if _g.drawMapGrid then map:drawTestGrid() end
+  if _g.drawCollisionBoxes then pEng:draw() end
 	newLightWorld:Draw() -- Draw the light world with white color
   camera:detach() -- do all drawing before this
 end
@@ -134,9 +134,9 @@ function love.keypressed(key)
     local x, y, z = newLightWorld:GetPosition()
     print('lightWordl coords: ' .. x .. ' ' .. y .. ' ' .. z)
     print('lightArr:')
-    _.each(lightArr, function(l) print(l:GetPosition()) end)
+    _u.each(lightArr, function(l) print(l:GetPosition()) end)
     print('bodyArr:')
-    _.each(bodyArr, function(b) print(b:GetPosition()) end)
+    _u.each(bodyArr, function(b) print(b:GetPosition()) end)
   end
 end
 
