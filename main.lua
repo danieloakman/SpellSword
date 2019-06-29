@@ -3,7 +3,10 @@ function love.load()
     -- Enable debugging if run in debug mode:
     require('mobdebug').start()
   end
-  io.stdout:setvbuf('no') -- NOTE: TURN THIS OFF WHEN RUNNING IN PROD
+  
+  -- Prints console out to output of editor
+--  io.stdout:setvbuf('no') -- NOTE: TURN THIS OFF WHEN RUNNING IN PROD
+
   local majorV, minorV, revision, codename = love.getVersion()
   print('LOVE2D version: ' .. majorV .. '.' .. minorV .. 'r' .. revision .. ' ' .. codename)
   
@@ -23,7 +26,6 @@ function love.load()
   local Player = require 'player'
   local Map = require 'map'
   local Physics = require 'physics'
-  local MeleeWeapon = require 'meleeWeapon'
   
   -- Shadows:
   Shadows = require "shadows"
@@ -105,14 +107,14 @@ function love.draw()
   map:draw('backWalls')
   player:draw()
   map:draw('frontWalls')
-  map:drawTestGrid()
+--  map:drawTestGrid()
 --  pEng:draw()
 	newLightWorld:Draw() -- Draw the light world with white color
   camera:detach() -- do all drawing before this
 end
 
 function love.mousepressed(x, y, button, isTouch)
-  Player:mousepressed(x, y, button, isTouch)
+  player:mousepressed(x, y, button, isTouch)
 end
 
 function love.keypressed(key)
