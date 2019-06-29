@@ -1,5 +1,5 @@
-require 'weapon'
-MeleeWeapon = Weapon:extend()
+local Weapon = require 'weapon'
+local MeleeWeapon = Weapon:extend()
 
 function MeleeWeapon:new(name, owner)
   local weapons = {
@@ -9,7 +9,7 @@ function MeleeWeapon:new(name, owner)
         x = 288, y = 16, frameWidth = 16, frameHeight = 16,
         idle = {
           offsetX = 4, offsetY = 14, scaleX = 1, scaleY = 1,
-          rot = degreesToRadians(90)
+          rot = toRadians(90)
         },
         attack = {
         
@@ -49,3 +49,4 @@ function MeleeWeapon:draw()
   self.super:draw()
 end
 
+return MeleeWeapon

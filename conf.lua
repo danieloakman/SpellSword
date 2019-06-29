@@ -24,6 +24,6 @@ function love.conf(t)
   t.window.stencil = nil              -- The number of bits per sample in the stencil buffer
   t.window.display = 2                -- Index of the monitor to show the window in (number)
   t.window.highdpi = false            -- Enable high-dpi mode for the window on a Retina display (boolean)
-  t.window.x = 200               -- The x-coordinate of the window's position in the specified display (number)
+  t.window.x = 800               -- The x-coordinate of the window's position in the specified display (number)
   t.window.y = 200                    -- The y-coordinate of the window's position in the specified display (number)
 end

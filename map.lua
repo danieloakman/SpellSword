@@ -1,4 +1,5 @@
-Map = Object:extend()
+local Object = require 'lib/classic'
+local Map = Object:extend()
 
 function Map:new(mapName)
 --  self.map = require('maps/' .. mapName)
@@ -6,9 +7,12 @@ function Map:new(mapName)
 --  for k,v in pairs(tempMap) do self[k] = v end
   self = mergeTables(self, tempMap)
 
+  self.pixelWidth = self.tilewidth * self.width
+  self.pixelHeight = self.tileheight * self.height
+
   frameWidth = 16
   frameHeight = 16
-  
+    
   -- Create quads of every tile in the image:
   tiles = {}
   for i = 0, 31 do
@@ -30,7 +34,7 @@ function Map:new(mapName)
       self.spawn.y = (math.floor(i / mapHeight) + 1) * self.tileheight
       local x = i
       while x > mapWidth do x = x - mapWidth end
-      self.spawn.x = (x * self.tilewidth) + 8 -- 8 is for correcting
+      self.spawn.x = (x * self.tilewidth) + 8 -- 8 is for correcting for player offset
     end
   end
 end
@@ -125,3 +129,6 @@ function Map:drawTestGrid()
     y = y + interval
   end
 end
+
+return Map
+

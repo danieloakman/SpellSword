@@ -1,5 +1,6 @@
+local Object = require 'lib/classic'
 -- Abstract class:
-Entity = Object:extend()
+local Entity = Object:extend()
 
 function Entity:new(startCoords, x, y, width, height, speed, offsetX, offsetY)
   self.hp = 100
@@ -42,3 +43,5 @@ end
 function Entity:draw()
   love.graphics.draw(image.src, frames[math.floor(self.currentFrame)], self.x, self.y, 0, self.scaleX, self.scaleY, self.offsetX, self.offsetY, 0, 0)
 end
+
+return Entity

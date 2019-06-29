@@ -1,5 +1,6 @@
+local Object = require 'classic'
 -- Abstract class:
-Weapon = Object:extend()
+local Weapon = Object:extend()
 
 function Weapon:new(weapon, owner)
   self.x, self.y = owner.x, owner.y
@@ -26,3 +27,5 @@ function Weapon:draw()
     image.src, quad, self.x, self.y, self.rotation, self.scaleX, self.scaleY, self.offsetX, self.offsetY, 0, 0
   )
 end
+
+return Weapon

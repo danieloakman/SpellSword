@@ -1,4 +1,5 @@
-Physics = Object:extend()
+local Object = require 'lib/classic'
+local Physics = Object:extend()
 
 function Physics:new(player, map)
   self.HC = require 'lib/HC'
@@ -88,3 +89,5 @@ function Physics:draw()
   -- Draw all wall's collision box:
   for i,v in ipairs(self.mapWallsC) do v:draw('line') end
 end
+
+return Physics

@@ -1,5 +1,5 @@
-require 'entity'
-Player = Entity:extend()
+local Entity = require 'entity'
+local Player = Entity:extend()
 
 function Player:new(genderClass, x, y)
   local startCoords = {
@@ -94,7 +94,11 @@ function Player:mousepressed(x, y, button, isTouch)
       
     end
   else
-    print('\n' .. x .. ' ' .. y .. '\n' .. button .. '\n' .. tostring(isTouch))    
+    print(
+      x .. ' ' .. y .. '\n' ..
+      (windowWidth / 2) / self.super.x .. ' ' .. (windowHeight / 2) / self.super.y .. '\n' ..
+      x / self.super.x .. ' ' .. y / self.super.y
+    )
   end
 end
 
@@ -138,3 +142,5 @@ function Player:moveTo(x, y)
   self.super.x = x
   self.super.y = y
 end
+
+return Player

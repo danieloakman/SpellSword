@@ -3,6 +3,6 @@ function mergeTables(a, b)
   return a
 end
 
-function degreesToRadians(degrees)
+function toRadians(degrees)
   return (degrees * math.pi) / 180
 end
