@@ -1,5 +1,6 @@
 local Entity = require 'entity'
 local Player = Entity:extend()
+local MeleeWeapon = require 'meleeWeapon'
 
 function Player:new(genderClass, x, y)
   local startCoords = {
