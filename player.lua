@@ -1,6 +1,11 @@
 local Entity = require 'entity'
 local Player = Entity:extend()
+
 local MeleeWeapon = require 'meleeWeapon'
+local Light = require "shadows.Light"
+local Body = require "shadows.Body"
+--local PolygonShadow = require "shadows.ShadowShapes.PolygonShadow"
+local CircleShadow = require "shadows.ShadowShapes.CircleShadow"
 
 function Player:new(genderClass, x, y)
   local startCoords = {
@@ -17,6 +22,16 @@ function Player:new(genderClass, x, y)
   self.speedBoostAmount = 1.5
   self.lWeapon = MeleeWeapon('dagger', self)
   self.rWeapon = nil
+  
+  -- Lighting and Shadows
+  self.lightRadius = 100 -- world coordinate radius
+  self.light = Light:new(lightWorld, self.lightRadius)
+  self.light:SetColor(255, 255, 255, 255)
+  self.body = Body:new(lightWorld)
+  local x,y = camera:cameraCoords(self.super.x, self.super.y)
+  local x2,_ = camera:cameraCoords(self.super.x + (self.super.width / 2), 0) 
+  local screenRadius = math.abs(x2 - x)
+  CircleShadow:new(self.body, 0, 0, screenRadius)
 end
 
 function Player:update(dt)
@@ -57,7 +72,7 @@ function Player:update(dt)
   
   -- Update frames:
   if self.isMoving.left or self.isMoving.right or self.isMoving.up or self.isMoving.down then
-    -- Change to moving framesd
+    -- Change to moving frames:
     self.super.startFrame = 5
     self.super.endFrame = 9
   else
@@ -66,13 +81,31 @@ function Player:update(dt)
     self.super.endFrame = 5
   end
   
-  -- Updating speedMulti for diagonally moving
+  -- Updating speedMulti for diagonally moving:
   if (self.isMoving.left and self.isMoving.up) or (self.isMoving.up and self.isMoving.right) or
     (self.isMoving.right and self.isMoving.down) or (self.isMoving.down and self.isMoving.left) then
     -- Player is moving diagonally, so change the multiplier
     self.super.speedMulti = 1 / math.sqrt(2) -- 0.7071
   else
     self.super.speedMulti = 1
+  end
+  
+  -- Update light and body
+  do
+    local x, y = camera:cameraCoords(self.super.x, self.super.y) -- player x,y coords converted to screen/camera coords
+    local lightX,lightY = self.light:GetPosition()
+    if lightX ~= x or lightY ~= y then
+      self.light:SetPosition(x, y, 1.1)
+    end
+    local x2,_ = camera:cameraCoords(self.super.x + self.lightRadius, self.super.y)
+    local screenRadius = math.abs(x2 - x)
+    if self.light:GetRadius() ~= screenRadius then
+      self.light:SetRadius(screenRadius)
+    end
+    local bodyX,bodyY = self.body:GetPosition()
+    if bodyX ~= x or bodyY ~= y then
+      self.body:SetPosition(x, y)
+    end
   end
   
   self.super:update(dt)
