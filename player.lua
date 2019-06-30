@@ -2,9 +2,9 @@ local Entity = require 'entity'
 local Player = Entity:extend()
 
 local MeleeWeapon = require 'meleeWeapon'
-local Light = require "shadows.Light"
-local Body = require "shadows.Body"
-local CircleShadow = require "shadows.ShadowShapes.CircleShadow"
+local Light = require 'shadows.Light'
+local Body = require 'shadows.Body'
+local CircleShadow = require 'shadows.ShadowShapes.CircleShadow'
 
 function Player:new(genderClass, x, y)
   local startCoords = {

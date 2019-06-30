@@ -1,5 +1,4 @@
 -- Globally required libraries:
-inspect = require 'lib/inspect'
 _u = require 'lib/underscore'
 sfxr = require 'lib/sfxr'
 require 'utils'
@@ -11,12 +10,12 @@ local Map = require 'map'
 local Physics = require 'physics'
 
 -- Shadows:
-local Shadows = require "shadows"
-local LightWorld = require "shadows.LightWorld"
-local Light = require "shadows.Light"
---local Body = require "shadows.Body"
---local PolygonShadow = require "shadows.ShadowShapes.PolygonShadow"
---local CircleShadow = require "shadows.ShadowShapes.CircleShadow"
+--local Shadows = require 'shadows'
+local LightWorld = require 'shadows.LightWorld'
+local Light = require 'shadows.Light'
+local PolygonRoom = require 'shadows.Room.PolygonRoom'
+local RectangleRoom = require 'shadows.Room.RectangleRoom'
+local Star = require 'shadows.Star'
 
 function love.load()
 	if arg[#arg] == '-debug' then
@@ -46,6 +45,11 @@ function love.load()
   
   cursorLight = Light:new(lightWorld, 300)
   cursorLight:SetColor(255, 255, 255, 255)
+--  star = Star:new(lightWorld, 5000)
+  
+--  room = PolygonRoom:new(lightWorld, 400, 300, {0,0, 100,0, 100,100, 0,100})
+--  room = RectangleRoom:new(lightWorld, 200, 200, 200, 200)
+
   -- Create a light on the light world, with radius 300
 --  table.insert(lightArr, Light:new(lightWorld, 300))
 
@@ -103,7 +107,7 @@ function love.draw()
   if _g.drawCollisionBoxes then pEng:draw() end
 	lightWorld:Draw() -- Everything above this will be affected by lights and shadows
   if _g.drawFps then
-    love.graphics.print("FPS: "..tostring(love.timer.getFPS( )), 1, 1, 0, 1, 1)
+    love.graphics.print('FPS: '..tostring(love.timer.getFPS( )), 1, 1, 0, 1, 1)
   end
   camera:detach() -- Do all drawing before this
 end
