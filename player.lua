@@ -4,7 +4,6 @@ local Player = Entity:extend()
 local MeleeWeapon = require 'meleeWeapon'
 local Light = require "shadows.Light"
 local Body = require "shadows.Body"
---local PolygonShadow = require "shadows.ShadowShapes.PolygonShadow"
 local CircleShadow = require "shadows.ShadowShapes.CircleShadow"
 
 function Player:new(genderClass, x, y)
@@ -28,10 +27,7 @@ function Player:new(genderClass, x, y)
   self.light = Light:new(lightWorld, self.lightRadius)
   self.light:SetColor(255, 255, 255, 255)
   self.body = Body:new(lightWorld)
-  local x,y = camera:cameraCoords(self.super.x, self.super.y)
-  local x2,_ = camera:cameraCoords(self.super.x + (self.super.width / 2), 0) 
-  local screenRadius = math.abs(x2 - x)
-  CircleShadow:new(self.body, 0, 0, screenRadius)
+  self.shadow = CircleShadow:new(self.body, 0, 0, 0) -- position and radius is done in update()
 end
 
 function Player:update(dt)
@@ -90,21 +86,29 @@ function Player:update(dt)
     self.super.speedMulti = 1
   end
   
-  -- Update light and body
+  -- Update light, body and shadow in the body:
   do
+    -- Light:
     local x, y = camera:cameraCoords(self.super.x, self.super.y) -- player x,y coords converted to screen/camera coords
     local lightX,lightY = self.light:GetPosition()
     if lightX ~= x or lightY ~= y then
       self.light:SetPosition(x, y, 1.1)
     end
-    local x2,_ = camera:cameraCoords(self.super.x + self.lightRadius, self.super.y)
+    local x2,_ = camera:cameraCoords(self.super.x + self.lightRadius, 0)
     local screenRadius = math.abs(x2 - x)
     if self.light:GetRadius() ~= screenRadius then
       self.light:SetRadius(screenRadius)
     end
+    -- Body:
     local bodyX,bodyY = self.body:GetPosition()
     if bodyX ~= x or bodyY ~= y then
       self.body:SetPosition(x, y)
+    end
+    -- Shadow:
+    x2,_ = camera:cameraCoords(self.super.x + (self.super.width / 2), 0) 
+    screenRadius = math.abs(x2 - x)
+    if self.shadow:GetRadius() ~= screenRadius then
+      self.shadow:SetRadius(screenRadius)
     end
   end
   
