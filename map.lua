@@ -40,13 +40,13 @@ function Map:new(mapName)
     end
   end
   
-  -- Create rooms for shadows:
+  -- Create bodies and shadows for the walls:
   self.bodies = {}
   self.shadows = {}
   local layerArr = self:get2dArrayOfLayer('floor')
   for i,row in ipairs(layerArr) do
     for j,v in ipairs(row) do
-      -- Look at adjacent tiles, if one of them is a floor then place a HC.rectangle
+      -- Look at adjacent tiles, if one of them is a floor place a body and shadow
       local arr = {{i=i, j=j-1}, {i=i, j=j+1}, {i=i-1, j=j}, {i=i+1, j=j}} -- adjacent tiles on left, right, top and bottom sides
       local adjacentTiles = {}
       for index,value in ipairs(arr) do
@@ -59,28 +59,36 @@ function Map:new(mapName)
       for index,value in ipairs(adjacentTiles) do
         if value ~= 0 then 
           isAdjacentFloor = true
-          if index == 4 then offsetY = -4 end -- is bordered on bottom with a floor, so decrease collision box height
+          if index == 4 then offsetY = -4 end -- is bordered on bottom with a floor, so decrease shadow height
         end
       end
       if isAdjacentFloor then
         -- TODO:
---        local tWidth,tHeight = self.tilewidth, self.tileheight
---        local body = Body:new(lightWorld)
---        local shadow = PolygonShadow:new(body, (j * tWidth) - 4, (i * tHeight) - 4, tWidth + 8, tHeight + 8 + offsetY)
---        table.insert(self.bodies, body)
---        table.insert(self.shadows, shadow)
+        local tWidth,tHeight = self.tilewidth, self.tileheight
+        local body = Body:new(lightWorld)
+        local x,y = (j * tWidth) - 4, (i*tHeight) - 4
+        local shadow = PolygonShadow:new(body, 0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8)
+        table.insert(self.bodies, {body=body, x=x, y=y})
+        table.insert(self.shadows, shadow)
       end
     end
   end
-  print('done')
   
-  -- Find and create lights:
-  -- todo
+  -- Find and create lights that are in the map:
+  -- todo:
   self.lights = {}
 end
 
 function Map:update(dt)
-  
+  -- Update body and shadow positions of walls:
+  for i,v in ipairs(self.bodies) do
+    local screenX,screenY = camera:cameraCoords(v.x, v.y)
+    local x,y = v.body:GetPosition()
+    if x ~= screenX or y ~= screenY then
+      v.body:SetPosition(screenX, screenY)
+    end
+  end
+--  _u.each(self.bodies, function(v) print(v.body:GetPosition()) end)
 end
 
 function Map:draw(layer)

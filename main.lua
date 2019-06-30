@@ -84,7 +84,7 @@ end
 
 function love.update(dt)
   player:update(dt)
-  pEng:update(dt, player)
+  pEng:update(dt)
   
   -- Update camera coordinates:
   local dx,dy = player.x - camera.x, player.y - camera.y
@@ -94,7 +94,8 @@ function love.update(dt)
 	cursorLight:SetPosition(love.mouse.getX(), love.mouse.getY(), 0.5)
 
 	-- Recalculate the light world
-	lightWorld:Update()
+	lightWorld:Update(dt)
+  map:update(dt)
 end
 
 function love.draw()
@@ -129,9 +130,13 @@ function love.keypressed(key)
     newLight:SetPosition(love.mouse.getX(), love.mouse.getY(), 1.1)
   end
   if key == 'k' then
-    print('lightWorld.lights:')
+    print('lightWorld.Lights: ', #lightWorld.Lights)
     _u.each(lightWorld.Lights, function(light)
       print(light)
+    end)
+    print('lightWorld.Bodies: ', #lightWorld.Bodies)
+    _u.each(lightWorld.Bodies, function(body)
+      print(body)
     end)
   end
 end

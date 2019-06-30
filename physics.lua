@@ -71,7 +71,7 @@ function Physics:new(player, map)
   end
 end
 
-function Physics:update(dt, player)
+function Physics:update(dt)
   -- Update playerC with new player position:
   self.playerC:moveTo(player.x, player.y)
   
