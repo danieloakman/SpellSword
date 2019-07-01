@@ -24,9 +24,9 @@ function Player:new(genderClass, x, y)
   
   -- Lighting and Shadows
   self.lightRadius = 100 -- world coordinate radius
-  self.light = Light:new(lightWorld, self.lightRadius)
+  self.light = Light:new(lWorld, self.lightRadius)
   self.light:SetColor(255, 255, 255, 255)
-  self.body = Body:new(lightWorld)
+  self.body = Body:new(lWorld)
   self.shadow = CircleShadow:new(self.body, 0, 0, 0) -- position and radius is done in update()
 end
 
