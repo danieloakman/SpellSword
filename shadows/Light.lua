@@ -12,7 +12,7 @@ Light.__type = "Light"
 Light.Arc = 360
 Light.Radius = 0
 Light.SizeRadius = 10
-Light.Blur = true
+Light.Blur = false -- true, was default
 
 Light.R, Light.G, Light.B, Light.A = 255, 255, 255, 255
 
