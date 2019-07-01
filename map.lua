@@ -62,13 +62,13 @@ function Map:new(mapName)
           end
         end
         if isAdjacentFloor then
-          local tWidth,tHeight = self.tilewidth, self.tileheight
-          local body = Body:new(lightWorld)
-          local x,y = (j * tWidth), (i*tHeight)
-          local vertices = {0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8}
-          local shadow = PolygonShadow:new(body, 0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8)
-          table.insert(self.bodies, {body=body, x=x, y=y})
-          table.insert(self.shadows, shadow)
+--          local tWidth,tHeight = self.tilewidth, self.tileheight
+--          local body = Body:new(lightWorld)
+--          local x,y = (j * tWidth), (i*tHeight)
+--          local vertices = {0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8}
+--          local shadow = PolygonShadow:new(body, 0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8)
+--          table.insert(self.bodies, {body=body, x=x, y=y})
+--          table.insert(self.shadows, shadow)
         end
       end
     end
@@ -88,7 +88,7 @@ function Map:update(dt)
     end
     -- todo: Update shadow vertices
   end
---  _u.each(self.bodies, function(v) print(v.body:GetPosition()) end)
+--  lume.each(self.bodies, function(v) print(v.body:GetPosition()) end)
 end
 
 function Map:draw(layer)

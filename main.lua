@@ -1,5 +1,5 @@
 -- Globally required libraries:
-_u = require 'lib/underscore'
+lume = require 'lib/lume'
 sfxr = require 'lib/sfxr'
 require 'utils'
 
@@ -13,9 +13,11 @@ local Physics = require 'physics'
 --local Shadows = require 'shadows'
 local LightWorld = require 'shadows.LightWorld'
 local Light = require 'shadows.Light'
-local PolygonRoom = require 'shadows.Room.PolygonRoom'
-local RectangleRoom = require 'shadows.Room.RectangleRoom'
-local Star = require 'shadows.Star'
+--local PolygonRoom = require 'shadows.Room.PolygonRoom'
+--local RectangleRoom = require 'shadows.Room.RectangleRoom'
+--local Star = require 'shadows.Star'
+local Body = require 'shadows.Body'
+local PolygonShadow = require 'shadows.ShadowShapes.PolygonShadow'
 
 function love.load()
 	if arg[#arg] == '-debug' then
@@ -45,6 +47,16 @@ function love.load()
   
   cursorLight = Light:new(lightWorld, 300)
   cursorLight:SetColor(255, 255, 255, 255)
+--  bodies = {}
+--  shadows = {}
+--  local tWidth,tHeight = 16, 16
+--  local body = Body:new(lightWorld)
+--  local x,y = 32, 32
+--  local vertices = {0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8}
+--  local shadow = PolygonShadow:new(body, 0,0, tWidth+8,0, tWidth+8,tHeight+8, 0,tHeight+8)
+--  table.insert(bodies, {body=body, x=x, y=y})
+--  table.insert(shadows, shadow)
+
 --  star = Star:new(lightWorld, 5000)
   
 --  room = PolygonRoom:new(lightWorld, 400, 300, {0,0, 100,0, 100,100, 0,100})
@@ -131,11 +143,11 @@ function love.keypressed(key)
   end
   if key == 'k' then
     print('lightWorld.Lights: ', #lightWorld.Lights)
-    _u.each(lightWorld.Lights, function(light)
+    lume.each(lightWorld.Lights, function(light)
       print(light)
     end)
     print('lightWorld.Bodies: ', #lightWorld.Bodies)
-    _u.each(lightWorld.Bodies, function(body)
+    lume.each(lightWorld.Bodies, function(body)
       print(body)
     end)
   end
