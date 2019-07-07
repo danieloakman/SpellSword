@@ -1,7 +1,9 @@
-local Weapon = require 'weapon'
-local MeleeWeapon = Weapon:extend()
+local class = require 'lib/middleclass'
 
-function MeleeWeapon:new(name, owner)
+local Weapon = require 'weapon'
+local MeleeWeapon = class('MeleeWeapon', Weapon)
+
+function MeleeWeapon:initialize(name, owner)
   local weapons = {
     dagger = {
       damage = 1, attackSpeed = 1.2,
@@ -38,15 +40,15 @@ function MeleeWeapon:new(name, owner)
       tier = 1
     }
   }
-  self.super:new(weapons[name], owner)
+  Weapon.initialize(self, weapons[name], owner)
 end
 
 function MeleeWeapon:update(dt, owner)
-  self.super:update(dt, owner)
+  Weapon.update(self, dt, owner)
 end
 
 function MeleeWeapon:draw()
-  self.super:draw()
+  Weapon.draw(self)
 end
 
 return MeleeWeapon

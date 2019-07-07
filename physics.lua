@@ -1,7 +1,7 @@
-local Object = require 'lib/classic'
-local Physics = Object:extend()
+local class = require 'lib/middleclass'
+local Physics = class('Physics')
 
-function Physics:new(player, map)
+function Physics:initialize(map)
   self.HC = require 'lib/HC'
 
   -- Array to hold collision messages:
@@ -78,7 +78,9 @@ function Physics:update(dt)
   -- Check for collisions with player. If there are any
   -- move player back to position before collision:
   for shape, delta in pairs(self.HC.collisions(self.playerC)) do
-    player:moveTo(player.x + delta.x, player.y + delta.y)
+    player.x = player.x + delta.x
+    player.y = player.y + delta.y
+--    player:moveTo(player.x + delta.x, player.y + delta.y)
   end
 end
 

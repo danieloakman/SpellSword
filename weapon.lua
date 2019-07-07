@@ -1,8 +1,8 @@
-local Object = require 'lib/classic'
+local class = require 'lib/middleclass'
 -- Abstract class:
-local Weapon = Object:extend()
+local Weapon = class('Weapon')
 
-function Weapon:new(weapon, owner)
+function Weapon:initialize(weapon, owner)
   self.x, self.y = owner.x, owner.y
   self.scaleX, self.scaleY = owner.scaleX, owner.scaleY
   self.offsetX, self.offsetY = weapon.sprite.idle.offsetX, weapon.sprite.idle.offsetY

@@ -44,7 +44,7 @@ function love.load()
     map = Map('testMap')
     camera = Camera(map.spawn.x, map.spawn.x, 3)
     player = Player('mR', map.spawn.x, map.spawn.y)
-    pEngine = Physics(player, map) -- Physics Engine
+    pEngine = Physics(map) -- Physics Engine
     
 --    cursorLight = Light:new(lWorld, 300)
 --    cursorLight:SetColor(255, 255, 255, 255)

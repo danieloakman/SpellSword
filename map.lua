@@ -1,12 +1,12 @@
-local Object = require 'lib/classic'
-local Map = Object:extend()
+local class = require 'lib/middleclass'
+local Map = class('Map')
 
 local Light = require 'shadows.Light'
 local Body = require 'shadows.Body'
 local PolygonShadow = require 'shadows.ShadowShapes.PolygonShadow'
 --local CircleShadow = require 'shadows.ShadowShapes.CircleShadow'
 
-function Map:new(mapName)
+function Map:initialize(mapName)
   local tempMap = require('maps/' .. mapName)
   self = mergeTables(self, tempMap)
 

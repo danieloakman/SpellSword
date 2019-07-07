@@ -1,8 +1,8 @@
-local Object = require 'lib/classic'
+local class = require 'lib/middleclass'
 -- Abstract class:
-local Entity = Object:extend()
+local Entity = class('Entity')
 
-function Entity:new(startCoords, x, y, width, height, speed, offsetX, offsetY)
+function Entity:initialize(startCoords, x, y, width, height, speed, offsetX, offsetY)
   self.hp = 100
   self.x = x
   self.y = y
